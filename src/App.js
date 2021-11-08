@@ -1,54 +1,106 @@
+import  { useState ,useEffect,useMemo} from 'react';
 
-import './App.css';
+import "./App.css";
 
 export default function App()
 {
-  // let name=["Chokka","Selva","Chokkz"];
-  let names=[
-    {name:"Chokka",src:"https://1.bp.blogspot.com/-NiNaLUVIuaE/XdP7uYpCD_I/AAAAAAAAbu8/j1n9UFpof_QqchUqFqJO2ZNcu6wRToLpwCLcBGAsYHQ/s16000-rw/24%2BHearts%2BDP%2BProfile%2BPictures%2Bcollection%2B2019%2B-facebookdp%2B%252817%2529.jpg"},
-    {name:"Selva",src:"https://wallpapercave.com/wp/wp5047303.jpg"},
-    {name:"Chokkz",src:"https://waukeepubliclibrary.org/sites/default/files/MasonJarLanternArt.jpg"},
-    {name:"Chokkz1707",src:"https://waukeepubliclibrary.org/sites/default/files/MasonJarLanternArt.jpg"}
-  ];
-  return (
-    <div className="text">
-     
-    { names.map(x=><Data s={x}/>)}
-  
-      {/* <Data name="SelvaKumar"/> */}
-      
-    </div>
-  );
+let [data,setData]=useState([]);
+let [display,setDisplay]=useState([]);
+useEffect((()=>
+{
+ fetch(`https://jsonplaceholder.typicode.com/${data}`)
+.then(response => response.json())
+.then(json=>setDisplay(json))
+
+// .then(json => console.log(json))
+// return ()=>setDisplay([]);
+
+}),[data])
+
+// console.log(display);
+
+return(<div>
+<button onClick={()=>setData("posts")}>Post</button>
+<button onClick={()=>setData("users")}>Users</button>
+<button onClick={()=>setData("photos")}>Photos</button>
+{/* {display.map((x)=>{return <p>{(x)}</p>})} */}
+
+{display.map((x)=>{ return <p>{x.name} {x.title}</p>})}
+
+{/* <Get details={(data,display)}/> */}
+</div>);
 }
 
+// function Get(props1,props2)
+// {
+//   // console.log(props1);
+//   // console.log(props2);
 
-
-// function Data(props)
-//  {
-//    console.log(props);
-//    let {s:candidate}=props;
-//   //  const name="Chokkz1707";
-//   return(<div>
-//   <h1>Hello {candidate} 😎😎</h1>
-                                              //  s:{name="chokkz",src="jygbjyh"}
-                                              // props.s.name,props.s.src
-                                              // let{s:name,s:src}=props
-//   </div>);
-  
+//   return props2.details.id;
 // }
 
+// function Get(props)
+// {
+//   // let[name,username]=props.details;
+// return (<div>
+//   <p>{props["details"].map((x)=>{return <p>{(x.id)}</p>})} </p>
 
+//   </div>)
+// }
 
+// export default function App()
+// {
+//   let [value,setValue]=useState(()=>{console.log("abb"); return 0});
+//   return (
+//     <div>
+//     <button onClick={()=>setValue(value+1)}>+</button>
+//     <p>{value}</p>
+//     <button onClick={()=>setValue(value-1)}>-</button>
+//     </div>
+//   );
+// }
 
+// import { useState, useMemo } from "react";
+// // import ReactDOM from "react-dom";
 
-function Data(props)
- {
-   console.log(props.s);
- let{s:{name:data,src:pic}}=props
-  return(<div>
-  <h1>Hello {data} 😎😎</h1>
-  {/* <img src="https://1.bp.blogspot.com/-NiNaLUVIuaE/XdP7uYpCD_I/AAAAAAAAbu8/j1n9UFpof_QqchUqFqJO2ZNcu6wRToLpwCLcBGAsYHQ/s16000-rw/24%2BHearts%2BDP%2BProfile%2BPictures%2Bcollection%2B2019%2B-facebookdp%2B%252817%2529.jpg"></img> */}
- <img src={pic} alt="dp"></img>
-  </div>);
-  
-}
+// function App() {
+//   let [box, setBox] = useState([]);
+//   const boxdata = () => setBox((t) => [...t, <Get />]);
+
+//   let [count, setCount] = useState(0);
+//   let counter = () => setCount((c) => c + 1);
+//   // let sum=Calculate(count);
+//   let sum = useMemo(() => Calculate(count), [count]);
+
+//   return (
+//     <div>
+//       <h4>To do List</h4>
+//       {box.map((box, index) => (
+//         <ul>
+//           <li>
+//             <p key={index}>{box}</p>
+//           </li>
+//         </ul>
+//       ))}
+//       <button onClick={boxdata}>Add Data</button>
+
+//       <button onClick={counter}>Count</button>
+//       <p>Count:{count}</p>
+//       <p>{sum}</p>
+//     </div>
+//   );
+// }
+
+// let Get = () => {
+//   return <input type="text"></input>;
+// };
+
+// function Calculate(numm) {
+//   for (let i = 0; i < 100000000; i++) {
+//     numm += 1;
+//     //  console.log("counting");
+//   }
+//   return numm;
+// }
+
+// export default App;
